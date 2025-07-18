@@ -384,7 +384,7 @@ import { registerWorkbenchContribution2, WorkbenchPhase } from '../common/contri
 
 // JSON Schemas
 (function registerJSONSchemas(): void {
-	const argvDefinitionFileSchemaId = 'vscode://schemas/argv';
+	const argvDefinitionFileSchemaId = 'lovelace://schemas/argv';
 	const jsonRegistry = Registry.as<IJSONContributionRegistry>(JSONExtensions.JSONContribution);
 	const schema: IJSONSchema = {
 		id: argvDefinitionFileSchemaId,

@@ -44,10 +44,8 @@ export function getUserDataPath(cliArgs: NativeParsedArgs, productName: string):
 
 function doGetUserDataPath(cliArgs: NativeParsedArgs, productName: string): string {
 
-	// 0. Running out of sources has a fixed productName
-	if (process.env['VSCODE_DEV']) {
-		productName = 'code-oss-dev';
-	}
+	// 0. Running out of sources uses the actual productName
+	// (removed hardcoded override)
 
 	// 1. Support portable mode
 	const portablePath = process.env['VSCODE_PORTABLE'];

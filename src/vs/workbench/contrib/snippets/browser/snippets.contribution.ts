@@ -54,7 +54,7 @@ Registry
 
 
 // schema
-const languageScopeSchemaId = 'vscode://schemas/snippets';
+const languageScopeSchemaId = 'lovelace://schemas/snippets';
 
 const snippetSchemaProperties: IJSONSchemaMap = {
 	prefix: {
@@ -97,7 +97,7 @@ const languageScopeSchema: IJSONSchema = {
 };
 
 
-const globalSchemaId = 'vscode://schemas/global-snippets';
+const globalSchemaId = 'lovelace://schemas/global-snippets';
 const globalSchema: IJSONSchema = {
 	id: globalSchemaId,
 	allowComments: true,

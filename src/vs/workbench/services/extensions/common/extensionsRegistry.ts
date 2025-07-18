@@ -170,7 +170,7 @@ const extensionKindSchema: IJSONSchema = {
 	],
 };
 
-const schemaId = 'vscode://schemas/vscode-extensions';
+const schemaId = 'lovelace://schemas/lovelace-extensions';
 export const schema: IJSONSchema = {
 	properties: {
 		engines: {

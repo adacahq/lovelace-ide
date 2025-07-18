@@ -21,6 +21,9 @@ import { clamp } from '../../../base/common/numbers.js';
 
 let unixShellEnvPromise: Promise<typeof process.env> | undefined = undefined;
 
+// LOVELACE: Track if this is the first call since startup
+let isFirstCall = true;
+
 /**
  * Resolves the shell environment by spawning a shell. This call will cache
  * the shell spawning so that subsequent invocations use that cached result.
@@ -63,7 +66,9 @@ export async function getResolvedShellEnv(configurationService: IConfigurationSe
 		// Call this only once and cache the promise for
 		// subsequent calls since this operation can be
 		// expensive (spawns a process).
-		if (!unixShellEnvPromise) {
+		// LOVELACE: Clear cache on first call to always get fresh environment on restart
+		if (!unixShellEnvPromise || isFirstCall) {
+			isFirstCall = false;
 			unixShellEnvPromise = Promises.withAsyncBody<NodeJS.ProcessEnv>(async (resolve, reject) => {
 				const cts = new CancellationTokenSource();
 

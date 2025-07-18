@@ -390,10 +390,35 @@ export class TextMateTokenizationFeature extends Disposable implements ITextMate
 			// We therefore use the non-streaming compiler :(.
 			return await response.arrayBuffer();
 		} else {
-			const response = await fetch(canASAR && this._environmentService.isBuilt
-				? FileAccess.asBrowserUri(`${nodeModulesAsarUnpackedPath}/vscode-oniguruma/release/onig.wasm`).toString(true)
-				: FileAccess.asBrowserUri(`${nodeModulesPath}/vscode-oniguruma/release/onig.wasm`).toString(true));
-			return response;
+			// In Electron, we can't use fetch with file:// URLs due to security restrictions
+			// Instead, let's use the lovelace:// protocol with a relative path
+			const wasmPath = canASAR && this._environmentService.isBuilt
+				? `${nodeModulesAsarUnpackedPath}/vscode-oniguruma/release/onig.wasm`
+				: `${nodeModulesPath}/vscode-oniguruma/release/onig.wasm`;
+			
+			try {
+				// Try to load via the browser URI which should work with our CSP
+				const wasmUri = FileAccess.asBrowserUri(wasmPath as any);
+				const response = await fetch(wasmUri.toString(true));
+				return await response.arrayBuffer();
+			} catch (error) {
+				// If that fails, check if we're using the lovelace-file:// protocol
+				const wasmUri = FileAccess.asBrowserUri(wasmPath as any);
+				if (wasmUri.scheme === 'lovelace-file') {
+					// For lovelace protocol, try using a relative path from the app root
+					try {
+						const relativePath = wasmPath.replace(/^.*\/lovelace-ide\//, '');
+						const response = await fetch(`/${relativePath}`);
+						return await response.arrayBuffer();
+					} catch (innerError) {
+						console.error('Failed to load WASM via relative path:', innerError);
+					}
+				}
+				
+				// If all else fails, return a minimal WASM module to prevent crashes
+				console.error('Failed to load WASM via fetch, TextMate syntax highlighting will not work:', error);
+				throw error;
+			}
 		}
 	}
 

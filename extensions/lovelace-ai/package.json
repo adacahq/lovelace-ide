@@ -1,0 +1,104 @@
+{
+  "name": "lovelace-ai",
+  "displayName": "Lovelace AI",
+  "description": "Claude AI integration for VS Code with modern UI-first approach",
+  "version": "0.0.1",
+  "publisher": "lovelace",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "extensionDependencies": [
+    "lovelace.lovelace-diffs"
+  ],
+  "categories": [
+    "AI",
+    "Programming Languages",
+    "Other"
+  ],
+  "icon": "resources/icon.png",
+  "activationEvents": [
+    "onView:lovelaceAI.chatView",
+    "onCommand:lovelaceAI.openChat"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "lovelace-ai-container",
+          "title": "Lovelace",
+          "icon": "resources/lovelace-ai.svg"
+        }
+      ]
+    },
+    "views": {
+      "lovelace-ai-container": [
+        {
+          "id": "lovelaceAI.chatView",
+          "name": "Chat",
+          "type": "webview"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "lovelaceAI.openChat",
+        "title": "Open Lovelace AI Chat",
+        "category": "Lovelace AI"
+      },
+      {
+        "command": "lovelaceAI.newChat",
+        "title": "New Chat Session",
+        "category": "Lovelace AI",
+        "icon": "$(add)"
+      },
+      {
+        "command": "lovelaceAI.clearChat",
+        "title": "Clear Chat",
+        "category": "Lovelace AI",
+        "icon": "$(trash)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "lovelaceAI.newChat",
+          "when": "view == lovelaceAI.chatView",
+          "group": "navigation"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Lovelace AI",
+      "properties": {
+        "lovelaceAI.autoShareSelection": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically share current selection with Claude"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@electron/rebuild": "^4.0.1",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.1",
+    "@typescript-eslint/parser": "^6.13.1",
+    "electron-rebuild": "^3.2.9",
+    "eslint": "^8.54.0",
+    "typescript": "^5.3.2"
+  },
+  "dependencies": {
+    "@anthropic-ai/claude-code": "^1.0.40",
+    "@vscode/codicons": "^0.0.36"
+  }
+}

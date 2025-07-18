@@ -55,6 +55,7 @@ import './browser/parts/statusbar/statusbarPart.js';
 import '../platform/actions/common/actions.contribution.js';
 import '../platform/undoRedo/common/undoRedoService.js';
 import '../platform/mcp/common/mcpResourceScannerService.js';
+import '../platform/claude/claude.contribution.js';
 import './services/workspaces/common/editSessionIdentityService.js';
 import './services/workspaces/common/canonicalUriService.js';
 import './services/extensions/browser/extensionUrlHandler.js';
@@ -108,6 +109,8 @@ import './services/quickinput/browser/quickInputService.js';
 import './services/userDataSync/browser/userDataSyncWorkbenchService.js';
 import './services/authentication/browser/authenticationService.js';
 import './services/authentication/browser/authenticationExtensionsService.js';
+import '../platform/auth/browser/authService.js';
+import '../platform/index/browser/indexService.js';
 import './services/authentication/browser/authenticationUsageService.js';
 import './services/authentication/browser/authenticationAccessService.js';
 import './services/authentication/browser/authenticationMcpUsageService.js';
@@ -204,6 +207,9 @@ import './contrib/speech/browser/speech.contribution.js';
 import './contrib/chat/browser/chat.contribution.js';
 import './contrib/inlineChat/browser/inlineChat.contribution.js';
 import './contrib/mcp/browser/mcp.contribution.js';
+
+// Agent
+import './contrib/agent/agent.contribution.js';
 
 // Interactive
 import './contrib/interactive/browser/interactive.contribution.js';
@@ -416,6 +422,9 @@ import './contrib/dropOrPasteInto/browser/dropOrPasteInto.contribution.js';
 
 // Edit Telemetry
 import './contrib/editTelemetry/browser/editTelemetry.contribution.js';
+
+// Inline Diff
+import './contrib/inlineDiff/inlineDiff.contribution.js';
 
 
 //#endregion

@@ -51,6 +51,9 @@ export async function createTasExperimentationService(
 		case 'code-oss':
 			targetPopulation = tas.TargetPopulation.Team;
 			break;
+		case 'lovelace':
+			targetPopulation = tas.TargetPopulation.Team;
+			break;
 		default:
 			targetPopulation = tas.TargetPopulation.Public;
 			break;

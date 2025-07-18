@@ -619,7 +619,7 @@ function getStylingSchemeEntry(description?: string, deprecationMessage?: string
 	};
 }
 
-export const tokenStylingSchemaId = 'vscode://schemas/token-styling';
+export const tokenStylingSchemaId = 'lovelace://schemas/token-styling';
 
 const schemaRegistry = platform.Registry.as<IJSONContributionRegistry>(JSONExtensions.JSONContribution);
 schemaRegistry.registerSchema(tokenStylingSchemaId, tokenClassificationRegistry.getTokenStylingSchema());

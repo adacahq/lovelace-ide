@@ -319,7 +319,7 @@ function initialize() {
 }
 initialize();
 
-export const iconsSchemaId = 'vscode://schemas/icons';
+export const iconsSchemaId = 'lovelace://schemas/icons';
 
 const schemaRegistry = platform.Registry.as<IJSONContributionRegistry>(JSONExtensions.JSONContribution);
 schemaRegistry.registerSchema(iconsSchemaId, iconRegistry.getIconSchema());

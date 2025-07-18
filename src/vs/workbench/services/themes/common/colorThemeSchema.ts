@@ -114,7 +114,7 @@ const textMateScopes = [
 	'variable.parameter'
 ];
 
-export const textmateColorsSchemaId = 'vscode://schemas/textmate-colors';
+export const textmateColorsSchemaId = 'lovelace://schemas/textmate-colors';
 export const textmateColorGroupSchemaId = `${textmateColorsSchemaId}#/definitions/colorGroup`;
 
 const textmateColorSchema: IJSONSchema = {
@@ -217,7 +217,7 @@ const textmateColorSchema: IJSONSchema = {
 	}
 };
 
-export const colorThemeSchemaId = 'vscode://schemas/color-theme';
+export const colorThemeSchemaId = 'lovelace://schemas/color-theme';
 
 const colorThemeSchema: IJSONSchema = {
 	type: 'object',

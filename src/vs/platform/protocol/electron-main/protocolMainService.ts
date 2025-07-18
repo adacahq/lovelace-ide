@@ -24,7 +24,7 @@ export class ProtocolMainService extends Disposable implements IProtocolMainServ
 	declare readonly _serviceBrand: undefined;
 
 	private readonly validRoots = TernarySearchTree.forPaths<boolean>(!isLinux);
-	private readonly validExtensions = new Set(['.svg', '.png', '.jpg', '.jpeg', '.gif', '.bmp', '.webp', '.mp4', '.otf', '.ttf']); // https://github.com/microsoft/vscode/issues/119384
+	private readonly validExtensions = new Set(['.svg', '.png', '.jpg', '.jpeg', '.gif', '.bmp', '.webp', '.mp4', '.otf', '.ttf', '.wasm']); // https://github.com/microsoft/vscode/issues/119384
 
 	constructor(
 		@INativeEnvironmentService private readonly environmentService: INativeEnvironmentService,
@@ -92,6 +92,19 @@ export class ProtocolMainService extends Disposable implements IProtocolMainServ
 	//#region vscode-file://
 
 	private handleResourceRequest(request: Electron.ProtocolRequest, callback: ProtocolCallback): void {
+		// Handle @anthropic-ai module requests
+		if (request.url.includes('@anthropic-ai')) {
+			// Extract the module path from the URL
+			const url = request.url;
+			const moduleMatch = url.match(/@anthropic-ai[^'")\s]*/);
+			if (moduleMatch) {
+				const modulePath = moduleMatch[0];
+				const resolvedPath = normalize(`${this.environmentService.appRoot}/node_modules/${modulePath}`);
+				this.logService.info(`Protocol: Resolving @anthropic-ai module ${modulePath} to ${resolvedPath}`);
+				return callback({ path: resolvedPath });
+			}
+		}
+
 		const path = this.requestToNormalizedFilePath(request);
 		const pathBasename = basename(path);
 

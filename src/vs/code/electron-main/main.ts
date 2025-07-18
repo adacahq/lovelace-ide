@@ -73,6 +73,8 @@ import { SaveStrategy, StateService } from '../../platform/state/node/stateServi
 import { FileUserDataProvider } from '../../platform/userData/common/fileUserDataProvider.js';
 import { addUNCHostToAllowlist, getUNCHost } from '../../base/node/unc.js';
 import { ThemeMainService } from '../../platform/theme/electron-main/themeMainServiceImpl.js';
+import { IClaudeMainService } from '../../platform/claude/common/claude.js';
+import { ClaudeMainService } from '../../platform/claude/electron-main/claudeMainService.js';
 
 /**
  * The main VS Code entry point.
@@ -229,6 +231,9 @@ class CodeMain {
 
 		// Tunnel
 		services.set(ITunnelService, new SyncDescriptor(TunnelService));
+
+		// Claude
+		services.set(IClaudeMainService, new SyncDescriptor(ClaudeMainService));
 
 		// Protocol (instantiated early and not using sync descriptor for security reasons)
 		services.set(IProtocolMainService, new ProtocolMainService(environmentMainService, userDataProfilesMainService, logService));

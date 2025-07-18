@@ -15,15 +15,15 @@ export const FOLDER_CONFIG_FOLDER_NAME = '.vscode';
 export const FOLDER_SETTINGS_NAME = 'settings';
 export const FOLDER_SETTINGS_PATH = `${FOLDER_CONFIG_FOLDER_NAME}/${FOLDER_SETTINGS_NAME}.json`;
 
-export const defaultSettingsSchemaId = 'vscode://schemas/settings/default';
-export const userSettingsSchemaId = 'vscode://schemas/settings/user';
-export const profileSettingsSchemaId = 'vscode://schemas/settings/profile';
-export const machineSettingsSchemaId = 'vscode://schemas/settings/machine';
-export const workspaceSettingsSchemaId = 'vscode://schemas/settings/workspace';
-export const folderSettingsSchemaId = 'vscode://schemas/settings/folder';
-export const launchSchemaId = 'vscode://schemas/launch';
-export const tasksSchemaId = 'vscode://schemas/tasks';
-export const mcpSchemaId = 'vscode://schemas/mcp';
+export const defaultSettingsSchemaId = 'lovelace://schemas/settings/default';
+export const userSettingsSchemaId = 'lovelace://schemas/settings/user';
+export const profileSettingsSchemaId = 'lovelace://schemas/settings/profile';
+export const machineSettingsSchemaId = 'lovelace://schemas/settings/machine';
+export const workspaceSettingsSchemaId = 'lovelace://schemas/settings/workspace';
+export const folderSettingsSchemaId = 'lovelace://schemas/settings/folder';
+export const launchSchemaId = 'lovelace://schemas/launch';
+export const tasksSchemaId = 'lovelace://schemas/tasks';
+export const mcpSchemaId = 'lovelace://schemas/mcp';
 
 export const APPLICATION_SCOPES = [ConfigurationScope.APPLICATION, ConfigurationScope.APPLICATION_MACHINE];
 export const PROFILE_SCOPES = [ConfigurationScope.MACHINE, ConfigurationScope.WINDOW, ConfigurationScope.RESOURCE, ConfigurationScope.LANGUAGE_OVERRIDABLE, ConfigurationScope.MACHINE_OVERRIDABLE];

@@ -841,7 +841,7 @@ class UserKeybindings extends Disposable {
  */
 class KeybindingsJsonSchema {
 
-	private static readonly schemaId = 'vscode://schemas/keybindings';
+	private static readonly schemaId = 'lovelace://schemas/keybindings';
 
 	private readonly commandsSchemas: IJSONSchema[] = [];
 	private readonly commandsEnum: string[] = [];

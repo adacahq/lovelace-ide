@@ -358,7 +358,7 @@ function packageTask(platform, arch, sourceFolderName, destinationFolderName, op
 		} else if (platform === 'darwin') {
 			const shortcut = gulp.src('resources/darwin/bin/code.sh')
 				.pipe(replace('@@APPNAME@@', product.applicationName))
-				.pipe(rename('bin/code'));
+				.pipe(rename('bin/lovelace'));
 			const policyDest = gulp.src('.build/policies/darwin/**', { base: '.build/policies/darwin' })
 				.pipe(rename(f => f.dirname = `policies/${f.dirname}`));
 			all = es.merge(all, shortcut, policyDest);
@@ -394,7 +394,7 @@ function packageTask(platform, arch, sourceFolderName, destinationFolderName, op
 				.pipe(replace('@@VERSION@@', version))
 				.pipe(replace('@@COMMIT@@', commit))
 				.pipe(replace('@@APPNAME@@', product.applicationName))
-				.pipe(replace('@@SERVERDATAFOLDER@@', product.serverDataFolderName || '.vscode-remote'))
+				.pipe(replace('@@SERVERDATAFOLDER@@', product.serverDataFolderName || '.lovelace-remote'))
 				.pipe(replace('@@QUALITY@@', quality))
 				.pipe(rename(function (f) { f.basename = product.applicationName; f.extname = ''; })));
 

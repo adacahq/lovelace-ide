@@ -41,7 +41,7 @@ import { SwitchCompositeViewAction } from '../compositeBarActions.js';
 
 export class ActivitybarPart extends Part {
 
-	static readonly ACTION_HEIGHT = 48;
+	static readonly ACTION_HEIGHT = 72;
 
 	static readonly pinnedViewContainersKey = 'workbench.activity.pinnedViewlets2';
 	static readonly placeholderViewContainersKey = 'workbench.activity.placeholderViewlets';
@@ -49,8 +49,8 @@ export class ActivitybarPart extends Part {
 
 	//#region IView
 
-	readonly minimumWidth: number = 48;
-	readonly maximumWidth: number = 48;
+	readonly minimumWidth: number = 72;
+	readonly maximumWidth: number = 72;
 	readonly minimumHeight: number = 0;
 	readonly maximumHeight: number = Number.POSITIVE_INFINITY;
 
@@ -84,7 +84,7 @@ export class ActivitybarPart extends Part {
 			preventLoopNavigation: true,
 			recomputeSizes: false,
 			fillExtraContextMenuActions: (actions, e?: MouseEvent | GestureEvent) => { },
-			compositeSize: 52,
+			compositeSize: 72,
 			colors: (theme: IColorTheme) => ({
 				activeForegroundColor: theme.getColor(ACTIVITY_BAR_FOREGROUND),
 				inactiveForegroundColor: theme.getColor(ACTIVITY_BAR_INACTIVE_FOREGROUND),
@@ -388,10 +388,10 @@ registerAction2(class extends Action2 {
 		super({
 			id: 'workbench.action.activityBarLocation.default',
 			title: {
-				...localize2('positionActivityBarDefault', 'Move Activity Bar to Side'),
-				mnemonicTitle: localize({ key: 'miDefaultActivityBar', comment: ['&& denotes a mnemonic'] }, "&&Default"),
+				...localize2('positionActivityBarDefault', 'Move Activity Bar to Left'),
+				mnemonicTitle: localize({ key: 'miDefaultActivityBar', comment: ['&& denotes a mnemonic'] }, "&&Left"),
 			},
-			shortTitle: localize('default', "Default"),
+			shortTitle: localize('default', "Left"),
 			category: Categories.View,
 			toggled: ContextKeyExpr.equals(`config.${LayoutSettings.ACTIVITY_BAR_LOCATION}`, ActivityBarPosition.DEFAULT),
 			menu: [{

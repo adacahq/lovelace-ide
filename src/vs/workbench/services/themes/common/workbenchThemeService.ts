@@ -39,10 +39,10 @@ export enum ThemeSettings {
 }
 
 export enum ThemeSettingDefaults {
-	COLOR_THEME_DARK = 'Default Dark Modern',
-	COLOR_THEME_LIGHT = 'Default Light Modern',
-	COLOR_THEME_HC_DARK = 'Default High Contrast',
-	COLOR_THEME_HC_LIGHT = 'Default High Contrast Light',
+	COLOR_THEME_DARK = 'Lovelace Dark',
+	COLOR_THEME_LIGHT = 'Lovelace Light',
+	COLOR_THEME_HC_DARK = 'Lovelace High Contrast',
+	COLOR_THEME_HC_LIGHT = 'Lovelace High Contrast Light',
 
 	COLOR_THEME_DARK_OLD = 'Default Dark+',
 	COLOR_THEME_LIGHT_OLD = 'Default Light+',

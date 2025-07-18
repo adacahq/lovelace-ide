@@ -42,7 +42,7 @@ import { ChatContextKeys } from '../../common/chatContextKeys.js';
 const toolEnumValues: string[] = [];
 const toolEnumDescriptions: string[] = [];
 
-const toolSetSchemaId = 'vscode://schemas/toolsets';
+const toolSetSchemaId = 'lovelace://schemas/toolsets';
 const toolSetsSchema: IJSONSchema = {
 	id: toolSetSchemaId,
 	allowComments: true,

@@ -1,0 +1,78 @@
+{
+  "name": "lovelace-theme",
+  "displayName": "Lovelace Theme",
+  "description": "Official Lovelace color themes for Visual Studio Code",
+  "version": "1.0.0",
+  "publisher": "lovelace",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.0.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "contributes": {
+    "themes": [
+      {
+        "id": "Adaca Dark",
+        "label": "Adaca Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/adaca-dark.json"
+      },
+      {
+        "id": "Adaca Light",
+        "label": "Adaca Light",
+        "uiTheme": "vs",
+        "path": "./themes/adaca-light.json"
+      },
+      {
+        "id": "Adaca High Contrast",
+        "label": "Adaca High Contrast",
+        "uiTheme": "hc-black",
+        "path": "./themes/adaca-hc_black.json"
+      },
+      {
+        "id": "Adaca High Contrast Light",
+        "label": "Adaca High Contrast Light",
+        "uiTheme": "hc-light",
+        "path": "./themes/adaca-hc_light.json"
+      },
+      {
+        "id": "Lovelace Dark",
+        "label": "Lovelace Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/lovelace-dark.json"
+      },
+      {
+        "id": "Lovelace Light",
+        "label": "Lovelace Light",
+        "uiTheme": "vs",
+        "path": "./themes/lovelace-light.json"
+      },
+      {
+        "id": "Lovelace Dark+",
+        "label": "Lovelace Dark+",
+        "uiTheme": "vs-dark",
+        "path": "./themes/lovelace-dark_plus.json"
+      },
+      {
+        "id": "Lovelace Light+",
+        "label": "Lovelace Light+",
+        "uiTheme": "vs",
+        "path": "./themes/lovelace-light_plus.json"
+      },
+      {
+        "id": "Lovelace High Contrast",
+        "label": "Lovelace High Contrast",
+        "uiTheme": "hc-black",
+        "path": "./themes/lovelace-hc_black.json"
+      },
+      {
+        "id": "Lovelace High Contrast Light",
+        "label": "Lovelace High Contrast Light",
+        "uiTheme": "hc-light",
+        "path": "./themes/lovelace-hc_light.json"
+      }
+    ]
+  }
+}

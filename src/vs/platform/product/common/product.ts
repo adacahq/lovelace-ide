@@ -32,10 +32,11 @@ else if (globalThis._VSCODE_PRODUCT_JSON && globalThis._VSCODE_PACKAGE_JSON) {
 	// Running out of sources
 	if (env['VSCODE_DEV']) {
 		Object.assign(product, {
-			nameShort: `${product.nameShort} Dev`,
-			nameLong: `${product.nameLong} Dev`,
-			dataFolderName: `${product.dataFolderName}-dev`,
-			serverDataFolderName: product.serverDataFolderName ? `${product.serverDataFolderName}-dev` : undefined
+			nameShort: product.nameShort,
+			nameLong: product.nameLong,
+			// Keep the same data folder name even in dev mode
+			dataFolderName: product.dataFolderName,
+			serverDataFolderName: product.serverDataFolderName
 		});
 	}
 
@@ -61,11 +62,11 @@ else {
 	if (Object.keys(product).length === 0) {
 		Object.assign(product, {
 			version: '1.102.0-dev',
-			nameShort: 'Code - OSS Dev',
-			nameLong: 'Code - OSS Dev',
-			applicationName: 'code-oss',
-			dataFolderName: '.vscode-oss',
-			urlProtocol: 'code-oss',
+			nameShort: 'Lovelace',
+			nameLong: 'Lovelace',
+			applicationName: 'lovelace',
+			dataFolderName: '.lovelace',
+			urlProtocol: 'lovelace',
 			reportIssueUrl: 'https://github.com/microsoft/vscode/issues/new',
 			licenseName: 'MIT',
 			licenseUrl: 'https://github.com/microsoft/vscode/blob/main/LICENSE.txt',

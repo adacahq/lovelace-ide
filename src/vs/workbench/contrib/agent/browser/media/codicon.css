@@ -1,0 +1,7 @@
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+/* This file imports the main codicon styles */
+@import url("../../../../../../base/browser/ui/codicons/codicon/codicon.css");

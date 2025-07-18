@@ -13,6 +13,7 @@
 					'self'
 					data:
 					blob:
+					lovelace:
 					vscode-remote-resource:
 					vscode-managed-remote-resource:
 					https:
@@ -28,18 +29,23 @@
 					'self'
 					'unsafe-eval'
 					blob:
+					lovelace:
 				;
 				style-src
 					'self'
 					'unsafe-inline'
+					lovelace:
 				;
 				connect-src
 					'self'
+					lovelace:
+					file:
 					https:
 					ws:
 				;
 				font-src
 					'self'
+					lovelace:
 					vscode-remote-resource:
 					vscode-managed-remote-resource:
 					https://*.vscode-unpkg.net

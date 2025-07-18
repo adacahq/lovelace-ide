@@ -9,7 +9,7 @@ import { Extensions as JSONExtensions, IJSONContributionRegistry } from '../../.
 import { IJSONSchema } from '../../../../base/common/jsonSchema.js';
 import { fontWeightRegex, fontStyleRegex, fontSizeRegex, fontIdRegex, fontColorRegex, fontIdErrorMessage } from '../../../../platform/theme/common/iconRegistry.js';
 
-const schemaId = 'vscode://schemas/icon-theme';
+const schemaId = 'lovelace://schemas/icon-theme';
 const schema: IJSONSchema = {
 	type: 'object',
 	allowComments: true,

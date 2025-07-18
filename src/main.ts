@@ -57,7 +57,7 @@ if (args['sandbox'] &&
 }
 
 // Set userData path before app 'ready' event
-const userDataPath = getUserDataPath(args, product.nameShort ?? 'code-oss-dev');
+const userDataPath = getUserDataPath(args, product.nameShort ?? 'Lovelace');
 if (process.platform === 'win32') {
 	const userDataUNCHost = getUNCHost(userDataPath);
 	if (userDataUNCHost) {
@@ -98,11 +98,11 @@ if (portable && portable.isPortable) {
 // Register custom schemes with privileges
 protocol.registerSchemesAsPrivileged([
 	{
-		scheme: 'vscode-webview',
+		scheme: 'lovelace-webview',
 		privileges: { standard: true, secure: true, supportFetchAPI: true, corsEnabled: true, allowServiceWorkers: true, codeCache: true }
 	},
 	{
-		scheme: 'vscode-file',
+		scheme: 'lovelace-file',
 		privileges: { secure: true, standard: true, supportFetchAPI: true, corsEnabled: true, codeCache: true }
 	}
 ]);
@@ -432,10 +432,8 @@ function getArgvConfigPath(): string {
 		return path.join(vscodePortable, 'argv.json');
 	}
 
-	let dataFolderName = product.dataFolderName;
-	if (process.env['VSCODE_DEV']) {
-		dataFolderName = `${dataFolderName}-dev`;
-	}
+	// Always use the same data folder name regardless of dev mode
+	const dataFolderName = product.dataFolderName;
 
 	return path.join(os.homedir(), dataFolderName!, 'argv.json');
 }

@@ -97,6 +97,8 @@ import { PolicyChannel } from '../../platform/policy/common/policyIpc.js';
 import { IUserDataProfilesMainService } from '../../platform/userDataProfile/electron-main/userDataProfile.js';
 import { IExtensionsProfileScannerService } from '../../platform/extensionManagement/common/extensionsProfileScannerService.js';
 import { IExtensionsScannerService } from '../../platform/extensionManagement/common/extensionsScannerService.js';
+import { IClaudeMainService } from '../../platform/claude/common/claude.js';
+import { ClaudeChannel } from '../../platform/claude/common/claudeIpc.js';
 import { ExtensionsScannerService } from '../../platform/extensionManagement/node/extensionsScannerService.js';
 import { UserDataProfilesHandler } from '../../platform/userDataProfile/electron-main/userDataProfilesHandler.js';
 import { ProfileStorageChangesListenerChannel } from '../../platform/userDataProfile/electron-main/userDataProfileStorageIpc.js';
@@ -1241,6 +1243,11 @@ export class CodeApplication extends Disposable {
 		// Utility Process Worker
 		const utilityProcessWorkerChannel = ProxyChannel.fromService(accessor.get(IUtilityProcessWorkerMainService), disposables);
 		mainProcessElectronServer.registerChannel(ipcUtilityProcessWorkerChannelName, utilityProcessWorkerChannel);
+
+		// Claude
+		const claudeMainService = accessor.get(IClaudeMainService);
+		const claudeChannel = new ClaudeChannel(claudeMainService);
+		mainProcessElectronServer.registerChannel('claude', claudeChannel);
 	}
 
 	private async openFirstWindow(accessor: ServicesAccessor, initialProtocolUrls: IInitialProtocolUrls | undefined): Promise<ICodeWindow[]> {

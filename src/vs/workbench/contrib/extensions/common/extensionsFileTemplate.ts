@@ -7,7 +7,7 @@ import { localize } from '../../../../nls.js';
 import { IJSONSchema } from '../../../../base/common/jsonSchema.js';
 import { EXTENSION_IDENTIFIER_PATTERN } from '../../../../platform/extensionManagement/common/extensionManagement.js';
 
-export const ExtensionsConfigurationSchemaId = 'vscode://schemas/extensions';
+export const ExtensionsConfigurationSchemaId = 'lovelace://schemas/lovelace-extensions';
 export const ExtensionsConfigurationSchema: IJSONSchema = {
 	id: ExtensionsConfigurationSchemaId,
 	allowComments: true,

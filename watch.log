@@ -1,0 +1,44 @@
+
+> code-oss-dev@1.103.0 watch-client
+> node --max-old-space-size=8192 ./node_modules/gulp/bin/gulp.js watch-client
+
+[08:10:23] Using gulpfile ~/Apps/adaca/code/new/lovelace-ide/gulpfile.js
+[08:10:23] Starting 'watch-client'...
+[08:10:23] Starting [36mclean-out[39m ...
+[08:10:24] Finished [36mclean-out[39m after [35m294 ms[39m
+[08:10:24] Starting [36mwatch-out[39m ...
+[08:10:24] Starting [32mcompilation[39m...
+[08:10:24] Starting [36mwatch-api-proposal-names[39m ...
+[08:10:24] Starting [32mcompilation[39m[34m api-proposal-names[39m...
+[08:10:24] Finished [32mcompilation[39m[34m api-proposal-names[39m with 0 errors after [35m205 ms[39m
+(node:515) [DEP0180] DeprecationWarning: fs.Stats constructor is deprecated.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+[08:11:06] [31mError[39m: /Users/lambros/Apps/adaca/code/new/lovelace-ide/src/vs/workbench/contrib/agent/browser/claudeIntegration.ts(15,1): 'ChatModeHandler' is declared but its value is never read.
+[08:11:06] [31mError[39m: /Users/lambros/Apps/adaca/code/new/lovelace-ide/src/vs/workbench/contrib/agent/browser/claudeIntegration.ts(195,10): '_buildSystemPrompt' is declared but its value is never read.
+[08:11:06] Finished [32mcompilation[39m with 2 errors after [35m41435 ms[39m
+[08:11:06] Starting [32mcompilation[39m...
+[08:11:06] [31mError[39m: /Users/lambros/Apps/adaca/code/new/lovelace-ide/src/vs/workbench/contrib/agent/browser/claudeIntegration.ts(15,1): 'ChatModeHandler' is declared but its value is never read.
+[08:11:06] [31mError[39m: /Users/lambros/Apps/adaca/code/new/lovelace-ide/src/vs/workbench/contrib/agent/browser/claudeIntegration.ts(195,10): '_buildSystemPrompt' is declared but its value is never read.
+[08:11:06] Finished [32mcompilation[39m with 2 errors after [35m9 ms[39m
+[08:11:09] Starting [32mcompilation[39m...
+[08:11:11] Finished [32mcompilation[39m with 0 errors after [35m1211 ms[39m
+[08:11:53] Starting [32mcompilation[39m...
+[08:11:53] Finished [32mcompilation[39m with 0 errors after [35m129 ms[39m
+[08:12:47] Starting [32mcompilation[39m...
+[08:12:47] Finished [32mcompilation[39m with 0 errors after [35m301 ms[39m
+[08:15:38] Starting [32mcompilation[39m...
+[08:15:39] [31mError[39m: /Users/lambros/Apps/adaca/code/new/lovelace-ide/src/vs/workbench/contrib/agent/browser/claudeIntegration.ts(104,20): Cannot find name 'SDKMessage'.
+[08:15:39] [31mError[39m: /Users/lambros/Apps/adaca/code/new/lovelace-ide/src/vs/workbench/contrib/agent/browser/claudeIntegration.ts(123,32): Cannot find name 'query'.
+[08:15:39] Finished [32mcompilation[39m with 2 errors after [35m489 ms[39m
+[08:15:44] Starting [32mcompilation[39m...
+[08:15:44] [31mError[39m: /Users/lambros/Apps/adaca/code/new/lovelace-ide/src/vs/workbench/contrib/agent/browser/claudeIntegration.ts(20,10): '_claudeCodeModule' is declared but its value is never read.
+[08:15:44] [31mError[39m: /Users/lambros/Apps/adaca/code/new/lovelace-ide/src/vs/workbench/contrib/agent/browser/claudeIntegration.ts(105,20): Cannot find name 'SDKMessage'.
+[08:15:44] [31mError[39m: /Users/lambros/Apps/adaca/code/new/lovelace-ide/src/vs/workbench/contrib/agent/browser/claudeIntegration.ts(124,32): Cannot find name 'query'.
+[08:15:44] Finished [32mcompilation[39m with 3 errors after [35m108 ms[39m
+[08:15:51] Starting [32mcompilation[39m...
+[08:15:52] [31mError[39m: /Users/lambros/Apps/adaca/code/new/lovelace-ide/src/vs/workbench/contrib/agent/browser/claudeIntegration.ts(33,16): 'loadClaudeCodeModule' is declared but its value is never read.
+[08:15:52] [31mError[39m: /Users/lambros/Apps/adaca/code/new/lovelace-ide/src/vs/workbench/contrib/agent/browser/claudeIntegration.ts(118,20): Cannot find name 'SDKMessage'.
+[08:15:52] [31mError[39m: /Users/lambros/Apps/adaca/code/new/lovelace-ide/src/vs/workbench/contrib/agent/browser/claudeIntegration.ts(137,32): Cannot find name 'query'.
+[08:15:52] Finished [32mcompilation[39m with 3 errors after [35m389 ms[39m
+[08:15:59] 'watch-client' errored after 5.58 min
+[08:15:59] Error: ENOENT: no such file or directory, stat '/Users/lambros/Apps/adaca/code/new/lovelace-ide/src/vs/workbench/contrib/agent/browser/claudeIntegration.ts.tmp.49363.1752704159015'

@@ -20,7 +20,7 @@ export namespace Schemas {
 	/**
 	 * A schema that is used for setting files
 	 */
-	export const vscode = 'vscode';
+	export const vscode = 'lovelace';
 
 	/**
 	 * A schema that is used for internal private files
@@ -51,38 +51,38 @@ export namespace Schemas {
 
 	export const command = 'command';
 
-	export const vscodeRemote = 'vscode-remote';
+	export const vscodeRemote = 'lovelace-remote';
 
-	export const vscodeRemoteResource = 'vscode-remote-resource';
+	export const vscodeRemoteResource = 'lovelace-remote-resource';
 
-	export const vscodeManagedRemoteResource = 'vscode-managed-remote-resource';
+	export const vscodeManagedRemoteResource = 'lovelace-managed-remote-resource';
 
-	export const vscodeUserData = 'vscode-userdata';
+	export const vscodeUserData = 'lovelace-userdata';
 
-	export const vscodeCustomEditor = 'vscode-custom-editor';
+	export const vscodeCustomEditor = 'lovelace-custom-editor';
 
-	export const vscodeNotebookCell = 'vscode-notebook-cell';
-	export const vscodeNotebookCellMetadata = 'vscode-notebook-cell-metadata';
-	export const vscodeNotebookCellMetadataDiff = 'vscode-notebook-cell-metadata-diff';
-	export const vscodeNotebookCellOutput = 'vscode-notebook-cell-output';
-	export const vscodeNotebookCellOutputDiff = 'vscode-notebook-cell-output-diff';
-	export const vscodeNotebookMetadata = 'vscode-notebook-metadata';
-	export const vscodeInteractiveInput = 'vscode-interactive-input';
+	export const vscodeNotebookCell = 'lovelace-notebook-cell';
+	export const vscodeNotebookCellMetadata = 'lovelace-notebook-cell-metadata';
+	export const vscodeNotebookCellMetadataDiff = 'lovelace-notebook-cell-metadata-diff';
+	export const vscodeNotebookCellOutput = 'lovelace-notebook-cell-output';
+	export const vscodeNotebookCellOutputDiff = 'lovelace-notebook-cell-output-diff';
+	export const vscodeNotebookMetadata = 'lovelace-notebook-metadata';
+	export const vscodeInteractiveInput = 'lovelace-interactive-input';
 
-	export const vscodeSettings = 'vscode-settings';
+	export const vscodeSettings = 'lovelace-settings';
 
-	export const vscodeWorkspaceTrust = 'vscode-workspace-trust';
+	export const vscodeWorkspaceTrust = 'lovelace-workspace-trust';
 
-	export const vscodeTerminal = 'vscode-terminal';
+	export const vscodeTerminal = 'lovelace-terminal';
 
 	/** Scheme used for code blocks in chat. */
-	export const vscodeChatCodeBlock = 'vscode-chat-code-block';
+	export const vscodeChatCodeBlock = 'lovelace-chat-code-block';
 
 	/** Scheme used for LHS of code compare (aka diff) blocks in chat. */
-	export const vscodeChatCodeCompareBlock = 'vscode-chat-code-compare-block';
+	export const vscodeChatCodeCompareBlock = 'lovelace-chat-code-compare-block';
 
 	/** Scheme used for the chat input editor. */
-	export const vscodeChatSesssion = 'vscode-chat-editor';
+	export const vscodeChatSesssion = 'lovelace-chat-editor';
 
 	/** Scheme used for the chat input part */
 	export const vscodeChatInput = 'chatSessionInput';
@@ -95,7 +95,7 @@ export namespace Schemas {
 	/**
 	 * Scheme used for loading the wrapper html and script in webviews.
 	 */
-	export const vscodeWebview = 'vscode-webview';
+	export const vscodeWebview = 'lovelace-webview';
 
 	/**
 	 * Scheme used for extension pages
@@ -106,7 +106,7 @@ export namespace Schemas {
 	 * Scheme used as a replacement of `file` scheme to load
 	 * files with our custom protocol handler (desktop only).
 	 */
-	export const vscodeFileResource = 'vscode-file';
+	export const vscodeFileResource = 'lovelace-file';
 
 	/**
 	 * Scheme used for temporary resources
@@ -121,7 +121,7 @@ export namespace Schemas {
 	/**
 	 * Scheme used for the Source Control commit input's text document
 	 */
-	export const vscodeSourceControl = 'vscode-scm';
+	export const vscodeSourceControl = 'lovelace-scm';
 
 	/**
 	 * Scheme used for input box for creating comments.
@@ -156,7 +156,7 @@ export function matchesSomeScheme(target: URI | string, ...schemes: string[]): b
 	return schemes.some(scheme => matchesScheme(target, scheme));
 }
 
-export const connectionTokenCookieName = 'vscode-tkn';
+export const connectionTokenCookieName = 'lovelace-tkn';
 export const connectionTokenQueryName = 'tkn';
 
 class RemoteAuthoritiesImpl {
@@ -251,7 +251,7 @@ export const nodeModulesPath: AppResourcePath = 'vs/../../node_modules';
 export const nodeModulesAsarPath: AppResourcePath = 'vs/../../node_modules.asar';
 export const nodeModulesAsarUnpackedPath: AppResourcePath = 'vs/../../node_modules.asar.unpacked';
 
-export const VSCODE_AUTHORITY = 'vscode-app';
+export const VSCODE_AUTHORITY = 'lovelace-app';
 
 class FileAccessImpl {
 
@@ -378,7 +378,7 @@ export namespace COI {
 
 	export const CoopAndCoep = Object.freeze(coiHeaders.get('3'));
 
-	const coiSearchParamName = 'vscode-coi';
+	const coiSearchParamName = 'lovelace-coi';
 
 	/**
 	 * Extract desired headers from `vscode-coi` invocation
