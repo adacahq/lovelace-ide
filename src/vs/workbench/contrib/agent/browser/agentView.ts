@@ -254,6 +254,15 @@ export class AgentView extends ViewPane {
 		// Clear and render messages
 		clearNode(this.messagesContainer);
 		
+		// Show loading state if phantom is being created
+		if (activeTab.isPhantomLoading) {
+			const loadingDiv = append(this.messagesContainer, $('.phantom-loading'));
+			const loadingContent = append(loadingDiv, $('.loading-content'));
+			append(loadingContent, $('.codicon.codicon-loading.codicon-modifier-spin'));
+			append(loadingContent, $('span')).textContent = 'Creating phantom replica...';
+			return;
+		}
+		
 		// Render messages
 		activeTab.messages.forEach((message: any) => {
 			const messageDiv = append(this.messagesContainer, $(`.message.${message.role}`));
@@ -338,13 +347,11 @@ export class AgentView extends ViewPane {
 			titleSpan.textContent = tab.title || `Chat ${index + 1}`;
 			
 			// Close button
-			if (tabs.length > 1) {
-				const closeSpan = append(tabDiv, $('span.session-close.codicon.codicon-close'));
-				closeSpan.onclick = (e) => {
-					e.stopPropagation();
-					this.agentService.closeTab(tab.id);
-				};
-			}
+			const closeSpan = append(tabDiv, $('span.session-close.codicon.codicon-close'));
+			closeSpan.onclick = async (e) => {
+				e.stopPropagation();
+				await this.agentService.closeTab(tab.id);
+			};
 			
 			// Click to switch
 			tabDiv.onclick = () => {

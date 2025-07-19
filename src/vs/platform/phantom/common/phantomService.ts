@@ -425,15 +425,11 @@ export abstract class PhantomService extends Disposable implements IPhantomServi
 			try {
 				await this.destroyPhantom(phantom.id);
 				deletedCount++;
-				this.logService.info(`Garbage collected phantom ${phantom.id} (orphaned tab: ${phantom.metadata.tabId})`);
 			} catch (error) {
 				this.logService.error(`Failed to garbage collect phantom ${phantom.id}:`, error);
 			}
 		}
 
-		if (deletedCount > 0) {
-			this.logService.info(`Garbage collection completed: deleted ${deletedCount} orphaned phantoms`);
-		}
 
 		return deletedCount;
 	}

@@ -9,6 +9,16 @@ import { IWorkspaceContextService } from '../../../../platform/workspace/common/
 import { IEditorService } from '../../../services/editor/common/editorService.js';
 import { ClaudeIntegration } from './claudeIntegration.js';
 import { ILogService } from '../../../../platform/log/common/log.js';
+import { IStorageService, StorageScope, StorageTarget } from '../../../../platform/storage/common/storage.js';
+
+interface IPersistedTabData {
+	tabId: string;
+	claudeSessionId?: string;
+	phantomId: string;
+	lastActive: number;
+	title: string;
+	mode: 'agent' | 'chat';
+}
 
 export class AgentService extends Disposable implements IAgentService {
 	readonly _serviceBrand: undefined;
@@ -38,6 +48,7 @@ export class AgentService extends Disposable implements IAgentService {
 	private readonly _claudeIntegration: ClaudeIntegration;
 	// private readonly _agentModeHandler: AgentModeHandler;
 	// private readonly _chatModeHandler: ChatModeHandler;
+	private static readonly STORAGE_KEY = 'agent.persistedTabs';
 
 	constructor(
 		@IPhantomService private readonly phantomService: IPhantomService,
@@ -45,6 +56,7 @@ export class AgentService extends Disposable implements IAgentService {
 		@IWorkspaceContextService private readonly workspaceContextService: IWorkspaceContextService,
 		@IEditorService private readonly editorService: IEditorService,
 		@ILogService private readonly logService: ILogService,
+		@IStorageService private readonly storageService: IStorageService,
 		// @IIndexService private readonly indexService: IIndexService,
 		// @IAuthService private readonly authService: IAuthService
 	) {
@@ -67,60 +79,171 @@ export class AgentService extends Disposable implements IAgentService {
 				}
 			}
 		});
+
+		// Restore persisted tabs on initialization
+		this.restorePersistedTabs();
+	}
+
+	private saveTabsToStorage(): void {
+		const tabsData: IPersistedTabData[] = [];
+		for (const [id, tab] of this._tabs) {
+			tabsData.push({
+				tabId: id,
+				claudeSessionId: tab.claudeSessionId,
+				phantomId: tab.phantomId,
+				lastActive: Date.now(),
+				title: tab.title,
+				mode: tab.mode
+			});
+		}
+		
+		this.storageService.store(
+			AgentService.STORAGE_KEY,
+			JSON.stringify(tabsData),
+			StorageScope.WORKSPACE,
+			StorageTarget.MACHINE
+		);
+		this.logService.info(`Saved ${tabsData.length} tabs to storage`);
+	}
+
+	private async restorePersistedTabs(): Promise<void> {
+		const stored = this.storageService.get(AgentService.STORAGE_KEY, StorageScope.WORKSPACE);
+		if (!stored) {
+			return;
+		}
+
+		try {
+			const tabsData: IPersistedTabData[] = JSON.parse(stored);
+			this.logService.info(`Found ${tabsData.length} persisted tabs`);
+
+			// Sort by last active to restore in order
+			tabsData.sort((a, b) => a.lastActive - b.lastActive);
+
+			for (const data of tabsData) {
+				try {
+					// Check if phantom still exists
+					const phantom = this.phantomService.getPhantom(data.phantomId);
+					if (!phantom) {
+						this.logService.warn(`Phantom ${data.phantomId} not found for tab ${data.tabId}, skipping restoration`);
+						continue;
+					}
+
+					// Restore the tab
+					const tab: IChatTab = {
+						id: data.tabId,
+						title: data.title,
+						phantomId: data.phantomId,
+						claudeSessionId: data.claudeSessionId,
+						mode: data.mode,
+						messages: [], // Messages are not persisted
+						isActive: false,
+						isStreaming: false,
+						isPhantomLoading: false  // Phantom already exists
+					};
+
+					this._tabs.set(data.tabId, tab);
+					this.logService.info(`Restored tab ${data.tabId} with session ${data.claudeSessionId}`);
+				} catch (error) {
+					this.logService.error(`Failed to restore tab ${data.tabId}:`, error);
+				}
+			}
+
+			// If we restored tabs, activate the most recent one
+			if (this._tabs.size > 0 && tabsData.length > 0) {
+				const mostRecent = tabsData[tabsData.length - 1];
+				if (this._tabs.has(mostRecent.tabId)) {
+					this.switchTab(mostRecent.tabId);
+				}
+			}
+		} catch (error) {
+			this.logService.error('Failed to restore persisted tabs:', error);
+		}
+	}
+
+	private findUnusedPersistedTab(): IPersistedTabData | undefined {
+		const stored = this.storageService.get(AgentService.STORAGE_KEY, StorageScope.WORKSPACE);
+		if (!stored) {
+			return undefined;
+		}
+
+		try {
+			const tabsData: IPersistedTabData[] = JSON.parse(stored);
+			// Find a persisted tab that isn't currently loaded
+			const loadedIds = new Set(this._tabs.keys());
+			return tabsData.find(data => !loadedIds.has(data.tabId) && data.claudeSessionId);
+		} catch (error) {
+			return undefined;
+		}
 	}
 
 	async createTab(): Promise<IChatTab> {
-		const id = generateUuid();
-		const phantomId = generateUuid();
+		// Check if we have a persisted session we can reuse
+		const persistedData = this.findUnusedPersistedTab();
+		
+		const id = persistedData?.tabId || generateUuid();
+		const phantomId = persistedData?.phantomId || generateUuid();
+		const claudeSessionId = persistedData?.claudeSessionId;
 		const tabIndex = this._tabs.size + 1;
 
-		// Create phantom instance for this tab
-		const workspaceUri = this.workspaceContextService.getWorkspace().folders[0]?.uri;
-		if (workspaceUri) {
-			try {
-				await this.phantomService.createPhantom({
-					id: phantomId,
-					workspaceUri: workspaceUri,
-					type: 'workspace',
-					purpose: 'agent',
-					tabId: id
-				});
-			} catch (error) {
-				this.logService.error('Failed to create phantom for tab:', error);
-				// Continue even if phantom creation fails
-			}
-		} else {
-			this.logService.warn('No workspace available for phantom creation');
-		}
-
+		// Create tab immediately with loading state
 		const tab: IChatTab = {
 			id,
-			title: `Chat ${tabIndex}`,
+			title: persistedData?.title || `Chat ${tabIndex}`,
 			phantomId,
-			mode: 'chat',
+			claudeSessionId,
+			mode: persistedData?.mode || 'chat',
 			messages: [],
 			isActive: false,
-			isStreaming: false
+			isStreaming: false,
+			isPhantomLoading: true  // Set loading state
 		};
 
 		this._tabs.set(id, tab);
-		this.logService.info(`Created tab ${id} with phantom ${phantomId}`);
+		this.logService.info(`Created tab ${id} with phantom ${phantomId}${claudeSessionId ? ` (recovered session ${claudeSessionId})` : ''}`);
 		this._onDidCreateTab.fire(tab);
 
 		// Always switch to the newly created tab
 		this.switchTab(id);
 
+		// Create phantom instance asynchronously
+		const workspaceUri = this.workspaceContextService.getWorkspace().folders[0]?.uri;
+		if (workspaceUri) {
+			this.phantomService.createPhantom({
+				id: phantomId,
+				workspaceUri: workspaceUri,
+				type: 'workspace',
+				purpose: 'agent',
+				tabId: id
+			}).then(() => {
+				// Clear loading state on success
+				tab.isPhantomLoading = false;
+				this._onDidReceiveMessage.fire({ tabId: id, message: { id: '', role: 'assistant', content: '', timestamp: 0 } });
+				this.logService.info(`Phantom ${phantomId} created successfully for tab ${id}`);
+			}).catch(error => {
+				// Clear loading state on error
+				tab.isPhantomLoading = false;
+				this._onDidReceiveMessage.fire({ tabId: id, message: { id: '', role: 'assistant', content: '', timestamp: 0 } });
+				this.logService.error('Failed to create phantom for tab:', error);
+			});
+		} else {
+			tab.isPhantomLoading = false;
+			this.logService.warn('No workspace available for phantom creation');
+		}
+
+		// Save tabs to storage
+		this.saveTabsToStorage();
+
 		return tab;
 	}
 
-	closeTab(tabId: string): void {
+	async closeTab(tabId: string): Promise<void> {
 		const tab = this._tabs.get(tabId);
 		if (!tab) {
 			return;
 		}
 
 		// Clean up phantom
-		this.phantomService.destroyPhantom(tab.phantomId);
+		await this.phantomService.destroyPhantom(tab.phantomId);
 
 		this._tabs.delete(tabId);
 		this._onDidCloseTab.fire(tabId);
@@ -134,6 +257,14 @@ export class AgentService extends Disposable implements IAgentService {
 				this._activeTabId = undefined;
 			}
 		}
+
+		// If no tabs remaining, create a new one
+		if (this._tabs.size === 0) {
+			this.createTab();
+		}
+
+		// Save tabs to storage after deletion
+		this.saveTabsToStorage();
 
 		// Run garbage collection after tab closure
 		this.runGarbageCollection();
@@ -302,6 +433,8 @@ export class AgentService extends Disposable implements IAgentService {
 				tab.claudeSessionId = response.sessionId;
 				// Also update the phantom registry with the Claude session ID
 				await this.phantomService.updateClaudeSessionId(tab.phantomId, response.sessionId);
+				// Save tabs to persist the session ID
+				this.saveTabsToStorage();
 			}
 
 			// Apply changes to phantom if present
@@ -395,6 +528,9 @@ export class AgentService extends Disposable implements IAgentService {
 
 		tab.mode = mode;
 		this._onDidChangeMode.fire({ tabId, mode });
+		
+		// Save tabs to persist the mode change
+		this.saveTabsToStorage();
 
 		// Create workspace-wide phantom for agent mode if needed
 		if (mode === 'agent' && tab.messages.length === 0) {

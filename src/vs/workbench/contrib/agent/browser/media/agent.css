@@ -406,10 +406,21 @@
 .message-content ol {
 	padding-left: 24px;
 	margin: 8px 0;
+	display: inline-grid;
 }
 
 .message-content li {
 	margin: 1px 0;
+}
+
+.message-content > div > :first-child {
+	margin-top: 0;
+	padding-top: 0;
+}
+
+.message-content > div > :last-child {
+	margin-bottom: 0;
+	padding-bottom: 0;
 }
 
 .message-content h1,
@@ -469,4 +480,35 @@
 .message-content th {
 	background-color: var(--vscode-editor-background);
 	font-weight: 600;
+}
+
+/* Phantom loading state */
+.phantom-loading {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	min-height: 200px;
+}
+
+.loading-content {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	font-size: 14px;
+	color: var(--vscode-descriptionForeground);
+}
+
+.loading-content .codicon-loading {
+	font-size: 18px;
+}
+
+/* Loading spinner animation */
+@keyframes spin {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
+
+.codicon-modifier-spin {
+	animation: spin 1s linear infinite;
 }

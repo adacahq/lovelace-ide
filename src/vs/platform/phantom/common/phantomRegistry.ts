@@ -162,7 +162,6 @@ export class PhantomRegistry extends Disposable {
 		for (const id of toDelete) {
 			try {
 				await this.fileService.del(URI.joinPath(this.phantomsRoot, id), { recursive: true });
-				this.logService.info(`Cleaned up orphaned phantom: ${id}`);
 			} catch (error) {
 				this.logService.warn(`Failed to cleanup phantom ${id}:`, error);
 			}

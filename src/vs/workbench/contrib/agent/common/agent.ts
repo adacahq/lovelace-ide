@@ -42,6 +42,7 @@ export interface IAgentTab {
 	messages: IChatMessage[];
 	isActive: boolean;
 	isStreaming?: boolean;          // Track if tab is currently streaming
+	isPhantomLoading?: boolean;     // Track if phantom replica is being created
 }
 
 // Backwards compatibility alias
